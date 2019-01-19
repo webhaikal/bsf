@@ -160,7 +160,7 @@ mTotalBytesRead -= size;												\
 	}
 
 	SPtr<IReflectable> BinarySerializer::decode(const SPtr<DataStream>& data, UINT32 dataLength, 
-		SerializationContext* context, std::function<void(float)> progress)
+		SerializationContext* context, ProgressCallback progress)
 	{
 		mContext = context;
 		mReportProgress = nullptr;
@@ -217,7 +217,7 @@ mTotalBytesRead -= size;												\
 		assert(mTotalBytesRead == mTotalBytesToRead);
 
 		// Don't set report callback until we actually do the reads
-		mReportProgress = std::move(progress);
+		mReportProgress = progress;
 		mTotalBytesRead = 0;
 
 		// Now go through all of the objects and actually decode them
